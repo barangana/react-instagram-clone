@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import FirebaseContext from "../context/firebase";
+import * as ROUTES from "../constants/routes";
 
 function Login() {
   const history = useHistory();
@@ -13,7 +14,17 @@ function Login() {
   const [error, setError] = useState("");
   const isInvalid = password === "" || email === "";
 
-  const handleLogin = () => {};
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      await firebase.auth().signInWithEmailAndPassword(email, password);
+      history.push(ROUTES.DASHBOARD);
+    } catch (error) {
+      setEmail("");
+      setPassword("");
+      setError(error.message);
+    }
+  };
 
   useEffect(() => {
     document.title = "Login - Instagram";
@@ -56,7 +67,7 @@ function Login() {
             <button
               disabled={isInvalid}
               type="submit"
-              className={`bg-blue-500 text-white w-full rounded h-8 font-bold ${
+              className={`bg-black w-full rounded h-8 font-bold ${
                 isInvalid && "opacity-50"
               }`}
             >
@@ -67,7 +78,7 @@ function Login() {
         <div className="flex justify-center items-center flex-col w-full bg-white p-4 border border-gray-primary">
           <p className="text-sm">
             Don't have an account? {``}
-            <Link to="/signup" className="font-bold text-blue-medium">
+            <Link to={ROUTES.SIGN_UP} className="font-bold text-blue-medium">
               Sign up
             </Link>
           </p>
