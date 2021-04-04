@@ -28,24 +28,20 @@ function Signup() {
           .createUserWithEmailAndPassword(email, password);
 
         // authentication
-        // -> email & password & username (displayName)
+        // sending email, username and password
         await createdUserResult.user.updateProfile({
           displayName: username,
         });
 
         // firebase user collection (create a document)
-        await firebase
-          .firestore()
-          .collection("users")
-          .add({
-            userId: createdUserResult.user.uid,
-            username: username.toLowerCase(),
-            fullname,
-            email: email.toLowerCase(),
-            following: ["2"],
-            followers: [],
-            dateCreated: Date.now(),
-          });
+        await firebase.firestore().collection("users").add({
+          userId: createdUserResult.user.uid,
+          username: username.toLowerCase(),
+          fullname,
+          email: email.toLowerCase(),
+          following: [],
+          dateCreated: Date.now(),
+        });
 
         history.push(ROUTES.DASHBOARD);
       } catch (error) {
