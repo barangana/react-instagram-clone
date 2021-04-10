@@ -21,7 +21,7 @@ function Suggestions({ userId, following, loggedUserId }) {
     if (userId) {
       suggestedProfiles();
     }
-    console.log("profiles", profiles);
+    //console.log("profiles", profiles);
   }, [userId]);
 
   return !profiles ? (
@@ -35,7 +35,7 @@ function Suggestions({ userId, following, loggedUserId }) {
         {profiles.map((profile) => (
           <SuggestedProfile
             key={profile.docId}
-            suggestedId={profile.docId}
+            profileDocId={profile.docId}
             username={profile.username}
             profileId={profile.userId}
             userId={userId}

@@ -7,7 +7,7 @@ import {
 } from "../../services/firebase";
 
 SuggestedProfile.propTypes = {
-  suggestedId: PropTypes.string.isRequired,
+  profileDocId: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
   profileId: PropTypes.string.isRequired,
   userId: PropTypes.string.isRequired,
@@ -15,7 +15,7 @@ SuggestedProfile.propTypes = {
 };
 
 function SuggestedProfile({
-  suggestedId,
+  profileDocId,
   username,
   profileId,
   userId,
@@ -25,8 +25,8 @@ function SuggestedProfile({
 
   async function handleFollowUser() {
     setFollowed(true);
-    await updateLoggedInUserFollowing(loggedUserId, profileId);
-    await updateFollowedUserFollowers(suggestedId, userId);
+    await updateLoggedInUserFollowing(loggedUserId, profileId, false);
+    await updateFollowedUserFollowers(profileDocId, userId, false);
   }
 
   return !followed ? (
@@ -45,7 +45,7 @@ function SuggestedProfile({
         <button
           className="text-xs font-bold text-blue-medium"
           type="button"
-          onClick={() => console.log("Follow this user")}
+          onClick={() => handleFollowUser()}
         >
           Follow
         </button>
