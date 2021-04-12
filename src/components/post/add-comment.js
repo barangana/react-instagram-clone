@@ -19,7 +19,13 @@ function AddComment({ docId, comments, setComments, commentInput }) {
 
   const handleSubmitComment = (e) => {
     e.preventDefault();
-    return null;
+    setComments([{ displayName, comment }, ...comments]);
+    setComment("");
+    return firebase
+      .firestore()
+      .collection("photos")
+      .doc(docId)
+      .update({ comments: FieldValue.arrayUnion({ displayName, comment }) });
   };
 
   return (
