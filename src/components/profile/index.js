@@ -20,6 +20,7 @@ function Index({ user }) {
 
   useEffect(() => {
     async function getProfileInfoAndPhotos() {
+      console.log("user.username", user.username);
       const photos = getUserPhotosByUsername(user.username);
       dispatch({
         profile: user,
@@ -31,22 +32,26 @@ function Index({ user }) {
   }, [user.username]);
   return (
     <div>
-      <Header />
+      <Header
+        photos={photosCollection ? photosCollection.length : 0}
+        profile={profile}
+        followerCount={followerCount}
+        setFollowerCount={dispatch}
+      />
       <Photos photos={photosCollection} />
-      <p>Hello {user.username}</p>
     </div>
   );
 }
 
 Index.propTypes = {
   user: PropTypes.shape({
-    dateCreated: PropTypes.number.isRequired,
-    emailAddress: PropTypes.string.isRequired,
-    followers: PropTypes.array.isRequired,
-    following: PropTypes.array.isRequired,
-    fullname: PropTypes.string.isRequired,
-    userId: PropTypes.string.isRequired,
-  }).isRequired,
+    dateCreated: PropTypes.number,
+    emailAddress: PropTypes.string,
+    followers: PropTypes.array,
+    following: PropTypes.array,
+    fullname: PropTypes.string,
+    userId: PropTypes.string,
+  }),
 };
 
 // Profile.propTypes = {
